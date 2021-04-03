@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html, body
+{
+    font-size: 18px;
+    font-family: 'Rubik', sans-serif;
+    color: hsl(0, 0%, 17%);
+}
+input
+{
+    outline: none;
+    padding: 0.8rem 1rem;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+}
+::placeholder
+{
+    font-family: 'Rubik', sans-serif;
+    color: hsl(0, 0%, 59%);
+}
+a
+{
+    width: 10%;
+    background: hsl(0, 0%, 17%);
+    padding: 0.61rem;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.background
+{
+    background: url("images/pattern-bg.png");
+    width: 100vw;
+    height: 35vh;
+    padding: 1rem 0;
+    text-align: center;
+    position: relative;
+}
+.background > h2
+{
+    color: #fff;
+    margin: 1rem auto;
+}
+.searchbar
+{
+    width: 35vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.searchbar a
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.location
+{
+    display: flex;
+    max-width: 75vw;
+    width: calc(100% - 6rem);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    z-index: 1;
+}
+.loc-item
+{
+    text-align: left;
+    align-self: flex-start;
+    width: 25%;
+}
+.loc-item h5
+{
+    color: hsl(0, 0%, 59%);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+.loc-item h2
+{
+    font-size: 1.3em;
+}
+.divider
+{
+    width: 1px;
+    background: hsl(0, 0%, 59%);
+    height: 50px;
+    margin: 0 2rem;
+}
+
+
+#map
+{
+    background: #ccc;
+    width: 100vw;
+    height: 65vh;
+}

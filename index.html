@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  
+  <title>IP Address Tracker</title>
+</head>
+<body>
+  <div class="background">
+    <h2>IP Address Tracker</h2>
+    <div class="searchbar">
+      <input type="text" placeholder="Search for any IP address or domain">
+      <a href="#">
+        <img src="images/icon-arrow.svg" alt="#">
+      </a>
+    </div>
+
+    <div class="location">
+      <div class="loc-item">
+        <h5>IP Address</h5>
+        <h2>192.212.174.101</h2>
+      </div>
+      <div class="divider"></div>
+      <div class="loc-item">
+        <h5>Location</h5>
+        <h2>Brooklyn, NY 10001</h2>
+      </div>
+      <div class="divider"></div>
+      <div class="loc-item">
+        <h5>Timezone</h5>
+        <h2>UTC -05:00</h2>
+      </div>
+      <div class="divider"></div>
+      <div class="loc-item">
+        <h5>ISP</h5>
+        <h2>SpaceX Starlink</h2>
+      </div>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <script src="class.js"></script>
+  <script src="app.js"></script>
+  <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGPrTBHvmR8B9xiRLGzMg0GiKTQVItr9Q&region=VN&language=vn&callback=initMap"
+      async
+  ></script>
+</body>
+</html>
