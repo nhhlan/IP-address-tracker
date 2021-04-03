@@ -1,33 +1,81 @@
-let map;
-let marker;
+// LOAD GOOGLE MAP
+let loc = { lat: 37.38605, lng: -122.08385 };
+let contentString = '<h3>8.8.8.8</h3><p>Mountain View, US 94035</p>';
+const icon = "./images/icon-location.svg";
+
+class IPMap {
+    constructor(){
+        this.map = new google.maps.Map(document.getElementById("map"), {
+            center: loc,
+            zoom: 10
+        });
+        this.marker = new google.maps.Marker({
+            position: loc,
+            map: this.map,
+            icon: icon,
+            animation: google.maps.Animation.DROP,
+        });
+    }
+    visualizeMap(coords, content){
+        this.map.setCenter(coords);
+        // Marker
+        const infowindow = new google.maps.InfoWindow({
+            content: content,
+        });  
+        this.marker.setPosition(coords);
+        this.marker.addListener("click", () => {
+            infowindow.open(this.map, this.marker);
+        });
+    }
+}
 
 function initMap() {
-    let loc = { lat: 10.82302, lng: 106.62965 }
-    // Map
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: loc,
-        zoom: 10,
-    });
-    // Marker
-    const icon = "./images/icon-location.svg";
-    const infowindow = new google.maps.InfoWindow({
-        content: '<h3>192.212.174.101</h3><p>Brooklyn, NY 10001</p>',
-    });  
-    marker = new google.maps.Marker({
-        position: loc,
-        map: map,
-        icon: icon,
-        animation: google.maps.Animation.DROP,
-    });
-    marker.addListener("click", () => {
-        infowindow.open(map, marker);
+    const ipMap = new IPMap;
+    ipMap.visualizeMap(loc, contentString);
+};
+
+
+// GET IP GEOLOCATION FROM IP ADDRESS
+async function getIPGeo(ip){
+    const apiKey = 'at_6y2KkguAxO0gedMsJRQvZBMRRhNbU';
+    try {
+        const response = await fetch(`https://geo.ipify.org/api/v1?apiKey=${apiKey}&ipAddress=${ip}`);
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+function getData(){
+    getIPGeo(input.value).then(data => {
+        ipAdd.innerText = data.ip;
+        geo.innerText = `${data.location.city}, ${data.location.country} ${data.location.postalCode}`;
+        timezone.innerText = `UTC ${data.location.timezone}`;
+        isp.innerText = data.isp;
+        loc = { lat: data.location.lat, lng: data.location.lng };
+        contentString = `<h3>${data.ip}</h3><p>${data.location.city}, ${data.location.country} ${data.location.postalCode}</p>`;
     });
 }
 
-function toggleBounce() {
-    if (marker.getAnimation() !== null) {
-      marker.setAnimation(null);
-    } else {
-      marker.setAnimation(google.maps.Animation.BOUNCE);
+
+const input = document.querySelector('.searchbar input');
+const submitButton = document.querySelector('.searchbar a');
+const ipAdd = document.querySelector('.ipAdd h2');
+const geo = document.querySelector('.geo h2');
+const timezone = document.querySelector('.timezone h2');
+const isp = document.querySelector('.isp h2');
+
+
+// EVENT LISTENER
+input.addEventListener('keyup', (ev) => {
+    if (ev.which === 13) { 
+        getData();
+        initMap();
     }
-  }
+});
+
+submitButton.addEventListener('click', () => {
+    getData();
+    initMap();
+});
