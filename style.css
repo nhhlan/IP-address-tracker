@@ -110,3 +110,68 @@ a
     width: 100vw;
     height: 65vh;
 }
+
+
+@media screen and (max-width: 1023px)
+{
+    html, body
+    {
+        font-size: 14px;
+    }
+    .searchbar
+    {
+        width: 45vw;
+    }
+    input
+    {
+        padding: 1.5rem 1.5rem;
+    }
+    a
+    {
+        width: 20%;
+        padding: 1.4rem;
+    }
+}
+@media screen and (max-width: 767px)
+{
+    html, body
+    {
+        font-size: 10px;
+    }
+    
+}
+@media screen and (max-width: 499px)
+{
+    .background
+    {
+        height: 40vh;
+    }
+    .background > h2
+    {
+        font-size: 2.5rem;
+        margin-top: 3rem;
+    }
+    .searchbar
+    {
+        width: 80vw;
+    }
+    .location
+    {
+        max-width: 80vw;
+        flex-direction: column;
+    }
+    .divider
+    {
+        display: none;
+    }
+    .loc-item
+    {
+        text-align: center;
+        width: 100%;
+        margin: 0 0 1rem;
+    }
+    .loc-item h2
+    {
+        font-size: 1.7rem;
+    }
+}
