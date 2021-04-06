@@ -25,11 +25,11 @@ input
     font-family: 'Rubik', sans-serif;
     color: hsl(0, 0%, 59%);
 }
-a
+button
 {
     width: 10%;
     background: hsl(0, 0%, 17%);
-    padding: 0.61em;
+    padding: 0.9em;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -55,11 +55,12 @@ a
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.searchbar a
+.searchbar button
 {
     position: absolute;
-    top: 0;
+    top: 50%;
     right: 0;
+    transform: translateY(-50%);
 }
 
 .location
@@ -76,7 +77,7 @@ a
     background: #fff;
     padding: 1.5rem 2rem;
     border-radius: 15px;
-    z-index: 1;
+    z-index: 2;
 }
 .loc-item
 {
@@ -109,6 +110,7 @@ a
     background: #ccc;
     width: 100vw;
     height: 65vh;
+    z-index: 1;
 }
 
 
@@ -126,10 +128,10 @@ a
     {
         padding: 1.5rem 1.5rem;
     }
-    a
+    button
     {
-        width: 20%;
-        padding: 1.4rem;
+        width: 12%;
+        padding: 1.4em 1em;
     }
 }
 @media screen and (max-width: 767px)
@@ -137,6 +139,11 @@ a
     html, body
     {
         font-size: 10px;
+    }
+    button
+    {
+        width: 15%;
+        padding: 1em;
     }
     
 }

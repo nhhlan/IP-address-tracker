@@ -1,37 +1,35 @@
 // LOAD GOOGLE MAP
-let loc = { lat: 37.38605, lng: -122.08385 };
+let map;
+let marker;
+let infowindow;
+let loc;
+const icon = {
+    url: "./images/icon-location.svg",
+    scaledSize: { width: 25, height: 32 }
+};
 let contentString = '<h3>8.8.8.8</h3><p>Mountain View, US 94035</p>';
-const icon = "./images/icon-location.svg";
-
-class IPMap {
-    constructor(){
-        this.map = new google.maps.Map(document.getElementById("map"), {
-            center: loc,
-            zoom: 10
-        });
-        this.marker = new google.maps.Marker({
-            position: loc,
-            map: this.map,
-            icon: icon,
-            animation: google.maps.Animation.DROP,
-        });
-    }
-    visualizeMap(coords, content){
-        this.map.setCenter(coords);
-        // Marker
-        const infowindow = new google.maps.InfoWindow({
-            content: content,
-        });  
-        this.marker.setPosition(coords);
-        this.marker.addListener("click", () => {
-            infowindow.open(this.map, this.marker);
-        });
-    }
-}
 
 function initMap() {
-    const ipMap = new IPMap;
-    ipMap.visualizeMap(loc, contentString);
+    let mapOptions = {
+        center: new google.maps.LatLng(37.38605, -122.08385),
+        zoom: 10,
+    };
+    let markerOptions = {
+        position: new google.maps.LatLng(37.38605, -122.08385),
+        map: map,
+        icon: icon,
+        animation: google.maps.Animation.DROP,
+    };
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    marker = new google.maps.Marker(markerOptions);
+    marker.setMap(map);
+    infowindow = new google.maps.InfoWindow({
+        content: contentString,
+    });
+    marker.addListener("click", () => {
+        infowindow.open(map, marker);
+        setTimeout(() => {infowindow.close()}, 2000);
+    });
 };
 
 
@@ -47,7 +45,17 @@ async function getIPGeo(ip){
     }
 }
 
-function getData(){
+
+// INSERT DATA TO UI
+const input = document.querySelector('.searchbar input');
+const submitButton = document.querySelector('.searchbar button');
+const ipAdd = document.querySelector('.ipAdd h2');
+const geo = document.querySelector('.geo h2');
+const timezone = document.querySelector('.timezone h2');
+const isp = document.querySelector('.isp h2');
+
+function getDataAndChangeLocation(){
+    // Insert data to location display
     getIPGeo(input.value).then(data => {
         ipAdd.innerText = data.ip;
         geo.innerText = `${data.location.city}, ${data.location.country} ${data.location.postalCode}`;
@@ -55,27 +63,23 @@ function getData(){
         isp.innerText = data.isp;
         loc = { lat: data.location.lat, lng: data.location.lng };
         contentString = `<h3>${data.ip}</h3><p>${data.location.city}, ${data.location.country} ${data.location.postalCode}</p>`;
-    });
+        return loc, contentString;
+    }).then(data => {
+        // Display on map
+        map.setCenter(loc);
+        marker.setPosition(loc);
+        infowindow.setContent(contentString);
+    })
 }
-
-
-const input = document.querySelector('.searchbar input');
-const submitButton = document.querySelector('.searchbar a');
-const ipAdd = document.querySelector('.ipAdd h2');
-const geo = document.querySelector('.geo h2');
-const timezone = document.querySelector('.timezone h2');
-const isp = document.querySelector('.isp h2');
 
 
 // EVENT LISTENER
 input.addEventListener('keyup', (ev) => {
     if (ev.which === 13) { 
-        getData();
-        initMap();
+        getDataAndChangeLocation();
     }
 });
 
 submitButton.addEventListener('click', () => {
-    getData();
-    initMap();
+    getDataAndChangeLocation();
 });
