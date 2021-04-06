@@ -13,6 +13,7 @@ function initMap() {
     let mapOptions = {
         center: new google.maps.LatLng(37.38605, -122.08385),
         zoom: 10,
+        disableDefaultUI: true,
     };
     let markerOptions = {
         position: new google.maps.LatLng(37.38605, -122.08385),
